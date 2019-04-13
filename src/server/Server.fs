@@ -42,9 +42,9 @@ let configureServices (services : IServiceCollection) =
     services.AddGiraffe() |> ignore
 
 let configureLogging (builder : ILoggingBuilder) =
-    builder.AddFilter(fun l -> l.Equals LogLevel.Error)
-           .AddConsole()
-           .AddDebug() |> ignore
+    builder
+        .AddConsole()
+        .AddDebug() |> ignore
 
 [<EntryPoint>]
 let main _ =
