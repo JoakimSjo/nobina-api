@@ -20,7 +20,7 @@ let wrap p wrapper = parse {
 }
 
 let allowedChars =
-    ['A' .. 'Z'] @ ['a' .. 'z'] @ ['0' .. '9'] @ ['æ'; 'ø'; 'å'; 'Æ'; 'Ø'; 'Å'; '.'; ','; ' '; ':'; '-']
+    ['A' .. 'Z'] @ ['a' .. 'z'] @ ['0' .. '9'] @ ['æ'; 'ø'; 'å'; 'Æ'; 'Ø'; 'Å'; '.'; ','; ' '; ':'; '-'; '!']
 
 let attr: Parser<string * string, unit> = parse {
     let! key = many1 (anyOf allowedChars) |>> implode
@@ -72,9 +72,6 @@ let pNotes = parse {
     }
 
     if fromTagExists then
-        // do! parseOpenTagNotClosed "i"
-        // let! attrs = sepEndBy attr (pchar ' ')
-        // do! pstring "/>" |>> ignore
         let! attrs = manyTill parseNotes (lookAhead  (pstring "</fromnotes>"))
         do! parseClosingTag "fromnotes"
         return Some attrs
@@ -116,6 +113,10 @@ let findValue key map =
     | Some s -> s
     | None -> "Ikke funnet"
 
+let getTime map = 
+    let time = findValue "d2" map
+    if time = "Ikke funnet" then findValue "d" map else time     
+
 let toDepartureNote notes : DepartureNote =
     let description = findValue "d" notes
     let situation = findValue "st" notes
@@ -125,7 +126,7 @@ let toDepartureNote notes : DepartureNote =
 let toDeparture (res: (Info * Notes)) : Departure =
     let (Info info), (Notes notes) = res
     let line = findValue "l" info
-    let time = findValue "d2" info
+    let time = getTime info
     let description = findValue "nd" info
     let parsedNote = match notes with
                      | Some n -> Some (List.map toDepartureNote n)
