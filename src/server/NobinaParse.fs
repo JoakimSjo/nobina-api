@@ -128,11 +128,12 @@ let toDeparture (res: (Info * Notes)) : Departure =
     let line = findValue "l" info
     let time = getTime info
     let description = findValue "nd" info
+    let live = Map.containsKey "d2" info
     let parsedNote = match notes with
                      | Some n -> (List.map toDepartureNote n)
                      | None -> []
 
-    { route = description; line = line; time = time; notes = parsedNote}
+    { route = description; line = line; live = live; time = time; notes = parsedNote}
 
 let toMap (res:(string * string) list * (string * string) list list option) =
     let a, b = res

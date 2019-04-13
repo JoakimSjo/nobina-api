@@ -10,5 +10,6 @@ type Departure = {
     route : string
     line: string
     time: string
+    live: bool
     notes: DepartureNote list
 }
