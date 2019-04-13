@@ -10,5 +10,5 @@ type Departure = {
     route : string
     line: string
     time: string
-    notes: DepartureNote list option
+    notes: DepartureNote list
 }
