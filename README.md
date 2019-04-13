@@ -1,31 +1,49 @@
-# server
+# Nobina API
+Simple API that returns the bus schedules for bus stops in Tromsø. 
 
-A [Giraffe](https://github.com/giraffe-fsharp/Giraffe) web application, which has been created via the `dotnet new giraffe` command.
+Currently the only endpoint is **/nobina/departures?stop=Raboof** and it will return all departures from the station **Raboof** in a JSON format. 
 
-## Build and test the application
-
-### Windows
-
-Run the `build.bat` script in order to restore, build and test (if you've selected to include tests) the application:
+Example response: 
 
 ```
-> ./build.bat
+[
+    {
+        "route": "Giæverbukta via Fagereng",
+        "line": "33",
+        "time": "14.04.2019 01:32:22",
+        "live": true,
+        "notes": []
+    },
+    {
+        "route": "Eidkjosen via Giæverbukta",
+        "line": "42",
+        "time": "14.04.2019 01:32:22",
+        "live": true,
+        "notes": []
+    },
+    {
+        "route": "Stakkevollan via sentrum",
+        "line": "42",
+        "time": "14.04.2019 02:25:00",
+        "live": true,
+        "notes": [
+            {
+                "description": "Bruk alternative holdeplasser ved Nerstranda linje 42 og Teorifagbygget linje 34",
+                "situation": "situation",
+                "version": "normal"
+            }
+        ]
+    },
+]
 ```
 
-### Linux/macOS
+# Usage
 
-Run the `build.sh` script in order to restore, build and test (if you've selected to include tests) the application:
+To build run **dotnet restore** and **dotnet build** inside the ***src/server*** folder. Or use **docker-compose build** inside ***src/server***. 
 
-```
-$ ./build.sh
-```
+# Misc
 
-## Run the application
+The main purpose of this project is to learn FSharp, therefore e.g the response from the Nobina API is parsed using a custom parser written in FParsec. 
 
-After a successful build you can start the web application by executing the following command in your terminal:
+Please contribute and report issues 😍🙌🏻
 
-```
-dotnet run src/server
-```
-
-After the application has started visit [http://localhost:5000](http://localhost:5000) in your preferred browser.
