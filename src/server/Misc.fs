@@ -5,6 +5,7 @@ open System
 open Microsoft.AspNetCore
 open Microsoft.Extensions.Logging
 open Giraffe
+open NobinaApi.Api
 
 let errorHandler (ex : Exception) (logger : ILogger) =
     logger.LogError(ex, "An unhandled exception has occurred while executing the request.")
@@ -18,7 +19,6 @@ let webApp : HttpFunc -> Http.HttpContext -> HttpFuncResult =
     choose [
         GET >=>
             choose [
-                route "/" >=> indexHandler "world"
-                routef "/hello/%s" indexHandler
+                routef "/nobina/%s" departures
             ]
         setStatusCode 404 >=> text "Not Found" ]
