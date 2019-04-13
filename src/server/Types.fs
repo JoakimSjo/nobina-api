@@ -7,8 +7,8 @@ type DepartureNote = {
 }
 
 type Departure = {
-    departure : string
+    route : string
     line: string
     time: string
-    note: DepartureNote list option
+    notes: DepartureNote list option
 }
