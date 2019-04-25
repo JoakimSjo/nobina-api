@@ -1,7 +1,7 @@
 module  NobinaApi.Departures
 open FSharp.Data
 open NobinaApi.Parse
-open NobinaApi.Types
+open NobinaApi.Shared
 
 [<Literal>]
 let NobinaDeparturesUrl = "http://rp.tromskortet.no/scripts/TravelMagic/TravelMagicWE.dll/v1DepartureSearchXML?hpl="
@@ -18,5 +18,5 @@ let getDepartures stop =
                | _ -> "Error with response"
 
     match parseNobinaResponse text with
-    | Ok deps -> deps
-    | _ -> []
+    | Ok res -> res
+    | _ -> { departures = []; stops = []}
