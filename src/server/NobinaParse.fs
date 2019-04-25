@@ -150,12 +150,12 @@ let toDeparture (res: (Info * Notes )) : Departure =
     let time = getTime info
     let description = findValue "nd" info
     let live = Map.containsKey "d2" info
-    let stopId = findValue "stopnr" info |> int
+    let stopNumber = findValue "stopnr" info |> int
     let parsedNote = match notes with
                      | Some n -> (List.map toDepartureNote n)
                      | None -> []
 
-    { route = description; line = line; live = live; time = time; notes = parsedNote; busStopId = stopId}
+    { route = description; line = line; live = live; time = time; notes = parsedNote; stopNumber = stopNumber}
 
 let toZone zone : Zone =
     let zone' = Map.ofList zone

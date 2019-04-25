@@ -25,6 +25,6 @@ type Departure = {
     line: string
     time: string
     live: bool
+    stopNumber: int
     notes: DepartureNote list
-    busStopId: int
 }

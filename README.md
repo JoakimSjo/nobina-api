@@ -1,7 +1,7 @@
 # Nobina API
 Simple API that returns the bus schedules for bus stops in Tromsø.
 
-Currently the only endpoint is **/nobina/departures?stop=Raboof** and it will return all **departures** and **stops** from the station **Raboof** in a JSON format.
+Currently the only endpoint is **/nobina/departures?stop=Raboof** and it will return all **departures** and **stops** from the station **Raboof** in JSON format.
 
 Example response:
 
@@ -11,34 +11,34 @@ Example response:
     {
       "route": "UiT - UNN via Giæverbukta",
       "line": "33",
-      "time": "25.04.2019 21:47:32",
+      "time": "25.04.2019 22:47:27",
       "live": true,
-      "notes": [],
-      "busStopId": 2
-    },
-    {
-      "route": "UiT - UNN via sentrum",
-      "line": "34",
-      "time": "25.04.2019 22:02:53",
-      "live": true,
-      "notes": [],
-      "busStopId": 1
+      "stopNumber": 2,
+      "notes": []
     },
     {
       "route": "UiT - UNN via Giæverbukta",
       "line": "33",
-      "time": "25.04.2019 22:16:00",
-      "live": false,
-      "notes": [],
-      "busStopId": 2
+      "time": "25.04.2019 22:59:12",
+      "live": true,
+      "stopNumber": 2,
+      "notes": []
     },
     {
       "route": "UiT - UNN via sentrum",
       "line": "34",
-      "time": "25.04.2019 22:31:00",
+      "time": "25.04.2019 23:03:37",
       "live": true,
-      "notes": [],
-      "busStopId": 1
+      "stopNumber": 1,
+      "notes": []
+    },
+    {
+      "route": "UiT - UNN via sentrum",
+      "line": "34",
+      "time": "25.04.2019 23:31:00",
+      "live": true,
+      "stopNumber": 1,
+      "notes": []
     }
   ],
   "stops": [
