@@ -86,7 +86,7 @@ Example response:
 
 # Usage
 
-To build run **dotnet restore** and **dotnet build** inside the ***src/server*** folder. Start the server with **dotnet run**. Or use **docker-compose build** inside ***src/server***. 
+To build run **dotnet restore** and **dotnet build** inside the ***src/server*** folder. Start the server with **dotnet run**. Or use **docker-compose build** inside ***src/server***. Default port is **8085**, but this can be changed by defining the enviroment variable *SERVER_PORT* with your preferred port.
 
 # Misc
 
