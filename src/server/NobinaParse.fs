@@ -129,14 +129,19 @@ let toResult =
             Result.Error err
 
 let findValue key map =
-    let result = Map.tryFind key map
-    match result with
+    match Map.tryFind key map with
     | Some s -> s
     | None -> "Ikke funnet"
 
 let getTime map = 
     let time = findValue "d2" map
     if time = "Ikke funnet" then findValue "d" map else time     
+
+let getStopNumber map = 
+    let stopNumber = findValue "stopnr" map
+    match stopNumber with
+    | "Ikke funnet" -> 0
+    | _ -> stopNumber |> int
 
 let toDepartureNote notes : DepartureNote =
     let description = findValue "d" notes
@@ -150,7 +155,7 @@ let toDeparture (res: (Info * Notes )) : Departure =
     let time = getTime info
     let description = findValue "nd" info
     let live = Map.containsKey "d2" info
-    let stopNumber = findValue "stopnr" info |> int
+    let stopNumber = getStopNumber info
     let parsedNote = match notes with
                      | Some n -> (List.map toDepartureNote n)
                      | None -> []
@@ -168,7 +173,7 @@ let toStop (res: (string * string) list * (string * string) list list) =
     let a, b = res
     let stage = Map.ofList a
     let stopId = findValue "hplnr" stage |> int
-    let stopNumber = findValue "stopnr" stage |> int
+    let stopNumber = getStopNumber stage
     let longitude = findValue "x" stage 
     let latitude = findValue "y" stage
     let lines = findValue "l" stage |> fun (s:string) -> s.Split[|','|]
