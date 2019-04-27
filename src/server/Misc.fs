@@ -16,5 +16,6 @@ let webApp : HttpFunc -> Http.HttpContext -> HttpFuncResult =
         GET >=>
             choose [
                 route "/nobina/departures" >=> warbler (fun _ -> departures)
+                route "/nobina/nearestStops" >=> warbler (fun _ -> stops)
             ]
         setStatusCode 404 >=> text "Not Found" ]

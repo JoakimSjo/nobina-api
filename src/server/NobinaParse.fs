@@ -21,7 +21,7 @@ let wrap p wrapper = parse {
 }
 
 let allowedChars =
-    ['A' .. 'Z'] @ ['a' .. 'z'] @ ['0' .. '9'] @ ['æ'; 'ø'; 'å'; 'Æ'; 'Ø'; 'Å'; '.'; ','; ' '; ':'; '-'; '!'; '('; ')']
+    ['A' .. 'Z'] @ ['a' .. 'z'] @ ['0' .. '9'] @ ['æ'; 'ø'; 'å'; 'Æ'; 'Ø'; 'Å'; '.'; ','; ' '; ':'; '-'; '!'; '('; ')'; '/';]
 
 let attr: Parser<string * string, unit> = parse {
     let! key = many1 (anyOf allowedChars) |>> implode
@@ -180,7 +180,15 @@ let toStop (res: (string * string) list * (string * string) list list) =
     let zones = List.map toZone b |> Array.ofList
 
     {stopId = stopId; stopNumber = stopNumber; longitude = longitude; latitude = latitude; lines = lines; zones = zones;}
-    
+
+let toStopSearch (res: (string * string) list) (stops: Stop list) =
+    let a = res
+    let stop = Map.ofList a
+    let name = findValue "n" stop
+    let distance = findValue "d" stop |> int
+    let longitude = findValue "x" stop 
+    let latitude = findValue "y" stop
+    {name = name; distance = distance; longitude = longitude; latitiude = latitude; stops = Array.ofList stops}
 
 let toMap (res:(string * string) list * (string * string) list list option) =
     let a, b = res
@@ -197,5 +205,21 @@ let parseDepartures = parse {
     return {departures = deps |> List.map (toMap >> toDeparture); stops = stages |> List.map toStop} 
 }
 
-let parseNobinaResponse text = 
-    run parseDepartures text |> toResult
+let parseNearestStation = parse {
+    do! parseOpeningTag "?xml version=\"1.0\" encoding=\"UTF-8\" ?"
+    let pGroup = parse {
+        let! attrs = between (parseOpenTagNotClosed "group") (pstring ">") (sepEndBy attr (pchar ' '))
+        let! stages = (manyTill pStages (lookAhead (pstring "</group>")))
+        do! parseClosingTag "group"
+        return toStopSearch attrs (stages |> List.map toStop)
+    }
+
+    let! groups = between (parseOpeningTag "stages") (parseClosingTag "stages") (manyTill pGroup (lookAhead (pstring "</stages>")))
+    return groups
+}
+
+let parseNobinaResponse = 
+    (toResult << run parseDepartures)
+
+let parseNobinaNearestStationResponse =
+    (toResult << run parseNearestStation)

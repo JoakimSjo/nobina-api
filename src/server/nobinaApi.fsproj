@@ -9,6 +9,7 @@
     <Compile Include="Shared.fs" />
     <Compile Include="NobinaParse.fs" />
     <Compile Include="Departures.fs" />
+    <Compile Include="Stops.fs" />
     <Compile Include="Api.fs" />
     <Compile Include="Misc.fs" />
     <Compile Include="Server.fs" />

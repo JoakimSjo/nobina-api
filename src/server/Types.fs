@@ -28,3 +28,11 @@ type Departure = {
     stopNumber: int
     notes: DepartureNote list
 }
+
+type StopSearch = {
+    name: string
+    distance: int
+    longitude: string
+    latitiude: string
+    stops: Stop []
+}
