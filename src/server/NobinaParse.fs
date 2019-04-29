@@ -20,13 +20,10 @@ let wrap p wrapper = parse {
     return res
 }
 
-let allowedChars =
-    ['A' .. 'Z'] @ ['a' .. 'z'] @ ['0' .. '9'] @ ['æ'; 'ø'; 'å'; 'Æ'; 'Ø'; 'Å'; '.'; ','; ' '; ':'; '-'; '!'; '('; ')'; '/';]
-
 let attr: Parser<string * string, unit> = parse {
-    let! key = many1 (anyOf allowedChars) |>> implode
+    let! key = many1 (noneOf "=") |>> implode
     do! pchar '=' |>> ignore
-    let! value = wrap ((many (anyOf allowedChars)) |>> implode) (pstring "\"")
+    let! value = wrap ((many (noneOf "\"")) |>> implode) (pstring "\"")
     return (key, value)
 }
 
@@ -113,8 +110,6 @@ let pStages = parse {
     do! parseClosingTag "i"
     return (attrs, zones)
 }
-
-
 
 let parseStages = parse {
     let! stages = between (parseOpeningTag "stages") (parseClosingTag "stages" ) (manyTill pStages (lookAhead (pstring "</stages>")))
