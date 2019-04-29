@@ -50,8 +50,8 @@ Example response:
     {
       "stopId": 19021102,
       "stopNumber": 1,
-      "longitude": "18,934237",
-      "latitude": "69,637518",
+      "longitude": 18.934237,
+      "latitude": 69.637518,
       "lines": [
         "34"
       ],
@@ -69,8 +69,8 @@ Example response:
     {
       "stopId": 19021102,
       "stopNumber": 2,
-      "longitude": "18,934236",
-      "latitude": "69,637653",
+      "longitude": 18.934236,
+      "latitude": 69.637653,
       "lines": [
         "33"
       ],
@@ -105,14 +105,14 @@ Example response:
   {
     "name": "Peder Hansens gate (Tromsø)",
     "distance": 56,
-    "longitude": "18,951653",
-    "latitiude": "69,646272",
+    "longitude": 18.951653,
+    "latitiude": 69.646272,
     "stops": [
       {
         "stopId": 19021092,
         "stopNumber": 1,
-        "longitude": "18,951653",
-        "latitude": "69,646272",
+        "longitude": 18.951653,
+        "latitude": 69.646272,
         "lines": [
           "37"
         ],
@@ -132,14 +132,14 @@ Example response:
   {
     "name": "Fiskergata (Tromsø)",
     "distance": 107,
-    "longitude": "18,953027",
-    "latitiude": "69,647139",
+    "longitude": 18.953027,
+    "latitiude": 69.647139,
     "stops": [
       {
         "stopId": 19021090,
         "stopNumber": 1,
-        "longitude": "18,953027",
-        "latitude": "69,647139",
+        "longitude": 18.953027,
+        "latitude": 69.647139,
         "lines": [
           "33",
           "42"
@@ -156,7 +156,7 @@ Example response:
         ]
       }
     ]
-  },
+  }
 ]
 ```
 

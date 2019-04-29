@@ -8,8 +8,8 @@ type Zone = {
 type Stop = {
     stopId: int
     stopNumber: int
-    longitude: string 
-    latitude: string
+    longitude: double 
+    latitude: double
     lines: string []
     zones: Zone []
 }
@@ -32,7 +32,7 @@ type Departure = {
 type StopSearch = {
     name: string
     distance: int
-    longitude: string
-    latitiude: string
+    longitude: double
+    latitiude: double
     stops: Stop []
 }

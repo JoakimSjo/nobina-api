@@ -7,6 +7,9 @@ open NobinaApi.Shared
 type Info = Info of Map<string, string>
 type Notes = Notes of Map<string, string> list option
 
+let inline convertLocationToDouble (s:string) = 
+    s.Replace(",", ".") |> double
+
 let ws =
     spaces
 
@@ -169,8 +172,8 @@ let toStop (res: (string * string) list * (string * string) list list) =
     let stage = Map.ofList a
     let stopId = findValue "hplnr" stage |> int
     let stopNumber = getStopNumber stage
-    let longitude = findValue "x" stage 
-    let latitude = findValue "y" stage
+    let longitude = findValue "x" stage |> convertLocationToDouble
+    let latitude = findValue "y" stage |> convertLocationToDouble
     let lines = findValue "l" stage |> fun (s:string) -> s.Split[|','|]
     let zones = List.map toZone b |> Array.ofList
 
@@ -181,8 +184,8 @@ let toStopSearch (res: (string * string) list) (stops: Stop list) =
     let stop = Map.ofList a
     let name = findValue "n" stop
     let distance = findValue "d" stop |> int
-    let longitude = findValue "x" stop 
-    let latitude = findValue "y" stop
+    let longitude = findValue "x" stop |> convertLocationToDouble 
+    let latitude = findValue "y" stop |> convertLocationToDouble
     {name = name; distance = distance; longitude = longitude; latitiude = latitude; stops = Array.ofList stops}
 
 let toMap (res:(string * string) list * (string * string) list list option) =
