@@ -8,3 +8,11 @@ services:
       - "8000:80"
     environment:
       - SERVER_PORT=80
+  api_arm:
+    build:
+      context: .
+      dockerfile: Dockerfile.Arm
+    ports:
+      - "8080:80"
+    environment:
+      - SERVER_PORT=80

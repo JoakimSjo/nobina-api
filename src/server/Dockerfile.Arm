@@ -1,0 +1,15 @@
+FROM microsoft/dotnet:2.1-sdk as builder
+
+RUN mkdir -p /root/src/app  
+WORKDIR /root/src/app  
+COPY . .
+
+RUN ["dotnet", "restore"]
+RUN dotnet publish -c release -o published -r linux-arm
+
+FROM mcr.microsoft.com/dotnet/core/runtime:2.1-stretch-slim-arm32v7
+
+WORKDIR /root/  
+COPY --from=builder /root/src/app/published .
+
+CMD ["dotnet", "./nobinaApi.dll"]
