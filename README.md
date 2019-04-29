@@ -1,7 +1,12 @@
 # Nobina API
-Simple API that returns the bus schedules for bus stops in Tromsø.
+Simple API that can return bus schedules from a bus stop and find bus stops near a position.
 
-Currently the only endpoint is **/nobina/departures?stop=Raboof** and it will return all **departures** and **stops** from the station **Raboof** in JSON format.
+## Departures from a bus stop 
+| Request     |       |
+|  ---  |  ---  |
+| Method | **Get**
+|   Path    |   **/nobina/departures**    |
+|   URL Params    |   **Required**<br /> stop=[string] <br/>Example: *stop = Raboof*   |
 
 Example response:
 
@@ -82,6 +87,77 @@ Example response:
     }
   ]
 }
+```
+
+## Bus stops near a position
+| Request     |       |
+|  ---  |  ---  |
+| Method | **Get**
+|   Path    |   **/nobina/nearestStops**    |
+|   URL Params    |   **Required**<br /> longitude=[Double] <br/>**Required**<br /> latitude=[Double]   |
+
+
+
+
+Example response:
+```json
+[
+  {
+    "name": "Peder Hansens gate (Tromsø)",
+    "distance": 56,
+    "longitude": "18,951653",
+    "latitiude": "69,646272",
+    "stops": [
+      {
+        "stopId": 19021092,
+        "stopNumber": 1,
+        "longitude": "18,951653",
+        "latitude": "69,646272",
+        "lines": [
+          "37"
+        ],
+        "zones": [
+          {
+            "value": "19100",
+            "region": "Tromsø"
+          },
+          {
+            "value": "19100",
+            "region": "Tromsø"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Fiskergata (Tromsø)",
+    "distance": 107,
+    "longitude": "18,953027",
+    "latitiude": "69,647139",
+    "stops": [
+      {
+        "stopId": 19021090,
+        "stopNumber": 1,
+        "longitude": "18,953027",
+        "latitude": "69,647139",
+        "lines": [
+          "33",
+          "42"
+        ],
+        "zones": [
+          {
+            "value": "19100",
+            "region": "Tromsø"
+          },
+          {
+            "value": "19100",
+            "region": "Tromsø"
+          }
+        ]
+      }
+    ]
+  },
+]
 ```
 
 # Usage
