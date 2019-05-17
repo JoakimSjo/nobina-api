@@ -23,6 +23,12 @@ let wrap p wrapper = parse {
     return res
 }
 
+let openingTag item = 
+    "<" + item + ">"
+
+let closingTag item = 
+    "</" + item + ">" 
+
 let attr: Parser<string * string, unit> = parse {
     let! key = many1 (noneOf "=") |>> implode
     do! pchar '=' |>> ignore
@@ -62,23 +68,25 @@ let pOptionalAndCheck optTag = parse {
     | None -> return false
 }
 
-let pNotes = parse {
-    let! fromTagExists = pOptionalAndCheck "<fromnotes>"
-
-    let parseNotes = parse {
+let parseNoteValues = parse {
         do! parseOpenTagNotClosed "i"
         let! attrs = sepEndBy attr (pchar ' ')
         do! pstring "/>" |>> ignore
         return attrs
     }
 
-    if fromTagExists then
-        let! attrs = manyTill parseNotes (lookAhead (pstring "</fromnotes>"))
-        do! parseClosingTag "fromnotes"
+let pOptionalItem (parser:Parser<(string * string) list, unit>) (item:string) = parse {
+    let! tagExists = pOptionalAndCheck (openingTag item)
+
+    if tagExists then
+        let! attrs = manyTill parser (lookAhead (pstring (closingTag item)))
+        do! parseClosingTag item
         return Some attrs
     else
         return! preturn None
 }
+
+let pDepartureNote = pOptionalItem parseNoteValues 
 
 let pDeparture = parse {
     let! attrs = pOpenTagAttrs "i"
@@ -88,7 +96,13 @@ let pDeparture = parse {
     if isSelfClosing then
         return (attrs, None)
     else
-         let! notes = pNotes
+         let! n1,n2 = tuple2 (pDepartureNote "notes") (pDepartureNote "fromnotes")
+         let notes = match n1, n2 with
+                     | Some n1, Some n2 -> Some (n1 @ n2)
+                     | Some n1, None -> Some n1
+                     | None, Some n2 -> Some n2
+                     | _, _ -> None 
+                 
          do! parseClosingTag "i"
          return (attrs, notes)
 }

@@ -11,7 +11,7 @@
     <Compile Include="Departures.fs" />
     <Compile Include="Stops.fs" />
     <Compile Include="Api.fs" />
-    <Compile Include="Misc.fs" />
+    <Compile Include="Routes.fs" />
     <Compile Include="Server.fs" />
     <None Include="web.config" />
     <Content Include="WebRoot/**/*">

@@ -9,7 +9,7 @@ open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Logging
 
 open Giraffe
-open NobinaApi.Misc
+open NobinaApi.Routes
 
 let tryGetEnv = 
     System.Environment.GetEnvironmentVariable 

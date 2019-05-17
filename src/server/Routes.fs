@@ -1,4 +1,4 @@
-module NobinaApi.Misc
+module NobinaApi.Routes
 
 open System
 
